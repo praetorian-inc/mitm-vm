@@ -13,14 +13,14 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 ## Host Setup
 This is dependent on the use case. The following two use-cases should cover most situations.
 ### Use Case 1: The device you want to man-in-the-middle connects to the Internet over Wi-Fi.
-1. Point 1
+1. Spin-up the mitm-vm.
 
-2. Point 2
+2. [Turn your Macbook into a Wireless Acces Point](http://support.apple.com/kb/PH13855?locale=en_US)
 
-### Use Case 2: The device you want to man-in-the-middle connects to the Internet via Ethernet.
-1. Point 1
+3. Route all traffic on your Macbook through the VM. 
+    * This can be done via your Network System Preferences in OS X. System Preferences → Network → Ethernet → Configure IPv4 → Manually → Set Static IP to a valid static IP, Subnet to the proper subnet, and _router to the ip address of the mitm-vm_.
 
-2. Point 2
+4. Confirm that you have Internet access on the host, and that traffic is routing through the VM.
 
 # TODO:
 * Setup mallory
