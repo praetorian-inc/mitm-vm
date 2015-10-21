@@ -20,3 +20,4 @@ export INTERNET_ROUTER_IP="10.10.12.1"
 #Setup routes
 ip route del 0/0
 route add default gw $INTERNET_ROUTER_IP dev eth1
+sysctl -w net.ipv4.ip_forward=1
