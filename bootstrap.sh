@@ -3,19 +3,43 @@
 #Configuration variable. You will have to modify these.
 export INTERNET_ROUTER_IP="10.10.12.1"
 
-#apt-get update
+#This is needed to supress annoying (but harmeless) error messages from apt-get
+export DEBIAN_FRONTEND=noninteractive
+
+#Misc packages that may be nice to have
+apt-get update
 #apt-get upgrade
-##Misc packages that may be nice to have
-#apt-get install -y vim curl module-assistant debhelper make
-##Mallory-specific dependencies. Based on this guide https://www.nccgroup.trust/us/about-us/resources/mallory-and-me-setting-up-a-mobile-mallory-gateway/
-#apt-get install -y mercurial python-pyasn1 python-netfilter libnetfilter-conntrack-dev python2.7 python2.7-dev python-setuptools
-#easy_install pynetfilter_conntrack
-#curl http://launchpadlibrarian.net/19436940/netfilter-extensions-source_20080719%2Bdebian-1_all.deb > nfs.deb
-#dpkg -i nfs.deb
-#apt-get install -y libnetfilter-conntrack3-dbg python-paramiko python-imaging
-##wget http://ubuntu.cs.utah.edu/ubuntu/pool/universe/libn/libnetfilter-conntrack/libnetfilter-conntrack1_0.0.99-1_amd64.deb
-##sudo dpkg -i libnetfilter-conntrack1_0.0.99-1_amd64.deb
-#apt-get install hostapd
+apt-get install -y curl module-assistant debhelper git bzip2 sqlite3 mercurial libbz2-dev libsqlite3-dev python-qt4 pyro-gui python-twisted-web python-qt4-sql libqt4-sql-sqlite swig libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev
+
+#Pyenv is awesome.
+git clone https://github.com/yyuu/pyenv.git /home/root/.pyenv
+export PYENV_ROOT="/home/root/.pyenv"
+echo 'export PYENV_ROOT="/home/root/.pyenv"' >> /home/root/.bashrc
+export PATH="$PYENV_ROOT/bin:$PATH"
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/root/.bashrc
+eval "$(/home/root/.pyenv/bin/pyenv init -)"
+echo 'eval "$(/home/root/.pyenv/bin/pyenv init -)"' >> /home/root/.bashrc
+#Pyenv with virtualenv is even better.
+git clone https://github.com/yyuu/pyenv-virtualenv.git /home/root/.pyenv/plugins/pyenv-virtualenv
+eval "$(/home/root/.pyenv/bin/pyenv virtualenv-init -)"
+echo 'eval "$(/home/root/.pyenv/bin/pyenv virtualenv-init -)"' >> /home/root/.bashrc
+
+/home/root/.pyenv/bin/pyenv install 2.6.8
+/home/root/.pyenv/bin/pyenv virtualenv --system-site-packages 2.6.8 mallory
+
+#Mallory installation
+/home/root/.pyenv/versions/mallory/bin/pip install pyasn1 netfilter paramiko IPy M2Crypto==0.22.3 Pillow Twisted
+/home/root/.pyenv/versions/mallory/bin/pip install -e /vagrant/deps/pynetfilter_conntrack
+apt-get install -y libnetfilter-conntrack-dev libnetfilter-conntrack3-dbg python-imaging
+git clone https://github.com/regit/pynetfilter_conntrack.git
+curl -s http://launchpadlibrarian.net/19436940/netfilter-extensions-source_20080719%2Bdebian-1_all.deb > nfs.deb
+dpkg -i nfs.deb
+dpkg -i /vagrant/deps/libnetfilter-conntrack1_0.0.99-1_amd64.deb
+hg clone https://bitbucket.org/IntrepidusGroup/mallory /home/root/mallory
+iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 20755
+iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 20755
+cd /vagrant/deps/mallory/src
+/home/root/.pyenv/versions/mallory/bin/python mallory.py
 
 #Setup routes
 ip route del 0/0

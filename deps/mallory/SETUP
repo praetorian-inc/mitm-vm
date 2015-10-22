@@ -1,0 +1,82 @@
+#################################################################
+#       Requirements                                            #
+#################################################################
+
+HARDWARE:
+768 MB Recommended for optional dev packages
+512 MB RAM recommended for GUI
+256 MB RAM without GUI
+2 NICs [optional]
+
+SOFTWARE:
+Ubuntu Desktop (e.g. 10.04, 11.04)
+
+#################################################################
+#        Setup Instructions Using Install Script                #
+#################################################################
+
+The install script will take care of packages for an ubuntu 
+environment.
+ cd mallory
+ sudo ./mallory_install.sh
+
+#################################################################
+#       Setup Instructions: Manually                            #
+#################################################################
+3.) Install Mercurial
+sudo apt-get install mercurial
+
+4.) Clone the bitbucket repository
+hg clone https://bitbucket.org/IntrepidusGroup/mallory
+
+5.) Setup Mallory Dependencies
+sudo apt-get install python-pip, python-m2crypto, python-qt4
+sudo apt-get install pyro-gui, python-netfilter, python-pyasn1
+sudo apt-get install python-paramiko, python-twisted-web
+sudo apt-get install python-qt4-sql, libqtr-sql-sqlite
+sudo apt-get install sqlite3, build-essential
+sudo apt-get install libnetfilter-conntrack-dev
+sudo apt-get install libnetfilter-conntrack3
+
+#################################################################
+#         Getting Started                                       #
+#################################################################
+
+STARTING
+* Start the mallory service
+ cd src
+ sudo python ./mallory.py
+
+* Start the mallory GUI from a new console
+ cd src
+ sudo python ./launch_gui.py
+
+
+FOLDERS
+* ca - certificate authority files including Mallory's private key
+* certs - MiTM certs that are created on the fly
+* db - directory where mallory stores all database files
+* mallory - empty directory
+* src - where the code lives
+* scripts - scripts used to configure mallory enviorment
+
+#################################################################
+#	  Usage 	                                        #
+#################################################################
+
+The usage and setup depends on the way you've setup your
+environment. 
+
+PPTP:
+* connect the victim to the PPTP server
+* setup the interfaces so PPP0 is the interface being middled
+    and eth0 is the outbound interface
+* uncomment or add any protocols/ports you'd like to listen on
+    and click apply
+* create a new rule for your environment or at least make a 
+    debugging rule by adding the rule, renaming it, set type to
+    debug, and save the rule
+* click intercept under the streams tab to begin listening
+
+See the website for more detailed information
+https://bitbucket.org/IntrepidusGroup/mallory

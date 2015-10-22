@@ -10,6 +10,9 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
 `vagrant up`
 
+When prompted, select the interface that will be the gateway interface
+
+
 ## Host Setup
 This is dependent on the use case. The following two use-cases should cover most situations.
 ### Use Case 1: The device you want to man-in-the-middle connects to the Internet over Wi-Fi.
