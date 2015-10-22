@@ -28,13 +28,13 @@ echo 'eval "$(/home/root/.pyenv/bin/pyenv virtualenv-init -)"' >> /home/root/.ba
 /home/root/.pyenv/bin/pyenv virtualenv --system-site-packages 2.7.3 mallory
 
 #Mallory installation
-/home/root/.pyenv/versions/mallory/bin/pip install pyasn1 netfilter paramiko IPy M2Crypto==0.22.3 Pillow Twisted
-/home/root/.pyenv/versions/mallory/bin/pip install -e /vagrant/deps/pynetfilter_conntrack
-apt-get install -y libnetfilter-conntrack-dev libnetfilter-conntrack3-dbg python-imaging
-git clone https://github.com/regit/pynetfilter_conntrack.git
 curl -s http://launchpadlibrarian.net/19436940/netfilter-extensions-source_20080719%2Bdebian-1_all.deb > nfs.deb
+apt-get install -y python-imaging
 dpkg -i nfs.deb
 dpkg -i /vagrant/deps/libnetfilter-conntrack1_0.0.99-1_amd64.deb
+dpkg -i /vagrant/deps/libnetfilter-conntrack3_1.0.1-1_amd64.deb
+/home/root/.pyenv/versions/mallory/bin/pip install pyasn1 netfilter paramiko IPy M2Crypto==0.22.3 Pillow Twisted
+/home/root/.pyenv/versions/mallory/bin/pip install -e /vagrant/deps/pynetfilter_conntrack
 iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 20755
 iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 20755
 #cd /vagrant/deps/mallory/src
