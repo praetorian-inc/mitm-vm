@@ -33,6 +33,7 @@ apt-get install -y python-imaging
 dpkg -i nfs.deb
 dpkg -i /vagrant/deps/libnetfilter-conntrack1_0.0.99-1_amd64.deb
 dpkg -i /vagrant/deps/libnetfilter-conntrack3_1.0.1-1_amd64.deb
+ln -s /usr/lib/x86_64-linux-gnu/libnetfilter_conntrack.so.3.3.0 /usr/lib/libnetfilter_conntrack.so
 /home/root/.pyenv/versions/mallory/bin/pip install pyasn1 netfilter paramiko IPy M2Crypto==0.22.3 Pillow Twisted
 /home/root/.pyenv/versions/mallory/bin/pip install -e /vagrant/deps/pynetfilter_conntrack
 iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 20755
