@@ -340,19 +340,21 @@ class Mallory(Subject):
             # This thread puts data in the database. 
             thread.start_new_thread(dbConn.fillDB, ())
 
-            try:
-                # Not a standard part of mallory. For ssh ownage only.
-                sshshellpwn = ssh.SSHProtocol(None, None, None)
-                thread.start_new_thread(sshshellpwn.provideshell, (self, ))
-            except NameError:
-                self.log.warn("main: SSHProtocol not defined. sshshellpwn "
-                              "unavailable")
+	    #KELBY: Testing
+            #try:
+            #    # Not a standard part of mallory. For ssh ownage only.
+            #    sshshellpwn = ssh.SSHProtocol(None, None, None)
+            #    thread.start_new_thread(sshshellpwn.provideshell, (self, ))
+            #except NameError:
+            #    self.log.warn("main: SSHProtocol not defined. sshshellpwn "
+            #                  "unavailable")
                 
             
             # Handle UDP
-            udp = base.UdpProtocol(dbConn, udpproxy, self.configured_protos)
-            udp.setrules(self.config_rules.get_rules())
-            self.config_rules.attach(udp)
+	    #KELBY: Testing
+            #udp = base.UdpProtocol(dbConn, udpproxy, self.configured_protos)
+            #udp.setrules(self.config_rules.get_rules())
+            #self.config_rules.attach(udp)
              
             # Setup bi-directional pub/sub setup for debugger events. This
             # is a very important step. Without it the debugging client and or
@@ -360,7 +362,8 @@ class Mallory(Subject):
             #self.debugger.attach(udp)
             #udp.attach(self.debugger)
             
-            thread.start_new_thread(udp.forward_any, ())
+	    #KELBY: Testing
+            #thread.start_new_thread(udp.forward_any, ())
             
             
             # Handle TCP

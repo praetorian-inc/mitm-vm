@@ -37,7 +37,7 @@ ln -s /usr/lib/x86_64-linux-gnu/libnetfilter_conntrack.so.3.3.0 /usr/lib/libnetf
 /home/root/.pyenv/versions/mallory/bin/pip install pyasn1 netfilter paramiko IPy M2Crypto==0.22.3 Pillow Twisted
 /home/root/.pyenv/versions/mallory/bin/pip install -e /vagrant/deps/pynetfilter_conntrack
 iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 20755
-iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 20755
+#iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 20755
 #cd /vagrant/deps/mallory/src
 #/home/root/.pyenv/versions/mallory/bin/python mallory.py
 

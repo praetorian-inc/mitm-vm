@@ -24,7 +24,7 @@ class Config(object):
         
         # Currently setup for debugging. Set this to logging.INFO to cut
         # down on the amount of logging detail.
-        log.setLevel(logging.DEBUG)
+        log.setLevel(logging.INFO)
         log.addHandler(console)
         
         log.info("Logging setup complete")    
