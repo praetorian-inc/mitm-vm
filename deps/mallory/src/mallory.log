@@ -1,0 +1,23 @@
+[*] [2015-10-22 14:11:05,008] INFO:Logging setup complete
+[*] [2015-10-22 14:11:05,010] INFO:ConfigRules.init: LOADING RULES.
+[*] [2015-10-22 14:11:05,011] INFO:ConfigRules.load_config: Rule Action String is:Debug
+[*] [2015-10-22 14:11:05,013] DEBUG:NetfilterTool: Instantiating object.
+[*] [2015-10-22 14:11:05,014] INFO:plugin.http.ObjectEditor: starting XML RPC Server
+[*] [2015-10-22 14:11:05,015] INFO:RPCServer: add_remote_obj - adding remote object <debug.Debugger object at 0x36ca3d0>  with remote object name 'debugger'
+[*] [2015-10-22 14:11:05,016] INFO:RPCServer: add_remote_obj - adding remote object <config_proto.ConfigProtocols object at 0x36ca4d0>  with remote object name 'config_proto'
+[*] [2015-10-22 14:11:05,016] INFO:RPCServer: add_remote_obj - adding remote object <config_rule.ConfigRules object at 0x7fdc60221f50>  with remote object name 'config_rules'
+[*] [2015-10-22 14:11:05,025] DEBUG:Mallory:configure_protocols - Entry
+[*] [2015-10-22 14:11:05,026] INFO:Binding mallory to: :20755
+[*] [2015-10-22 14:11:05,026] INFO:RPCServer: start_server - starting up
+[*] [2015-10-22 14:11:05,027] DEBUG:main: Waiting for connection
+[*] [2015-10-22 14:11:05,027] INFO:[*] SSHProtocol: Initializing
+[*] [2015-10-22 14:11:05,028] DEBUG:ConfigRules.getrules: <class Rule Debug All -- addr:* port:* proto:* direction:* payload:* passthru:False (<rule.Debug object at 0x36ca550>)>
+[*] [2015-10-22 14:11:05,029] INFO:[*] SSHProtocol: Initializing
+[*] [2015-10-22 14:11:05,030] DEBUG:ConfigRules.getrules: client requested rules -  [<rule.Rule object at 0x36ca610>]
+[*] [2015-10-22 14:11:05,032] INFO:UDPProtocol: Starting main UDP thread
+[*] [2015-10-22 14:11:05,032] DEBUG:NetfilterTool: Instantiating object.
+[*] [2015-10-22 14:11:05,032] DEBUG:KELBY: NetFilterTool init
+[*] [2015-10-22 14:11:05,032] DEBUG:UDPProtocol[m]: Waiting for data
+[*] [2015-10-22 14:11:29,015] DEBUG:KELBY: RECVFROM
+[*] [2015-10-22 14:11:29,016] DEBUG:UDPProtocol[m]: ('10.10.12.120', 17500) sent us '{"host_int": 3942837932, "versio'
+[*] [2015-10-22 14:11:29,017] DEBUG:KELBY: POST RECVFROM

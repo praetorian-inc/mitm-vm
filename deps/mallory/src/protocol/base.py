@@ -232,26 +232,35 @@ class UdpProtocol(Protocol):
         #TODO: Debugger support for UDP
         self.log.info("UDPProtocol: Starting main UDP thread")
         nftool = netfilter.NetfilterTool()
+	self.log.debug("KELBY: NetFilterTool init")
            
         while True:
             try:
                 # Get the packet and client address
                 self.log.debug("UDPProtocol[m]: Waiting for data")
                 pkt, caddr  = self.source.recvfrom(65507)
+		self.log.debug("KELBY: RECVFROM")
                 self.log.debug("UDPProtocol[m]: %s sent us %s" 
                                % (caddr, repr(pkt[:32])))
+		self.log.debug("KELBY: POST RECVFROM")
                 
                 # Get real destiation
+		self.log.debug("KELBY: GetRealDest")
                 rdst, rpt = nftool.getrealdest_ct(caddr[0], caddr[1])        
+		self.log.debug("KELBY: Post-GetRealDest")
                 raddr = (rdst, rpt)
                 
+		self.log.debug("KELBY: ConnData")
                 conndata = ConnData({'clientip' : caddr[0], \
                         'clientport' : caddr[1], \
                         'serverip' : rdst, 'serverport' : rpt, \
                         'conncount' : 1, 'direction' : 'c2s' })
+		self.log.debug("KELBY: POST ConnData")
                 dgram_time = time.time() 
-                
+               
+		self.log.debug("KELBY: ProcessRules?") 
                 if self.rules is not None:
+		    self.log.debug("KELBY: ProcessRules!")
                     pkt = self.processrules(pkt, conndata, dgram_time)
 
 
