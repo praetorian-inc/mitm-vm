@@ -3,6 +3,23 @@
 # Description
 This is an easy-to-deploy virtual machine that can provide flexible man-in-the-middle capabilities. This project will require little configuration, require little additional hardware, and provide many utilites and tools to accomplish common (and not so common) man-in-the-middle scenarios.
 
+#Includes the following tools
+* [mitmproxy](https://mitmproxy.org/index.html)
+
+    * An interactive console program that allows HTTP traffic flows to be intercepted, inspected, modified and replayed.
+
+* [netsed](http://manpages.ubuntu.com/manpages/lucid/man1/netsed.1.html)
+
+    * A utility that is designed to alter the contents of packets forwarded through your network in real time.
+
+* [sslstrip](http://www.thoughtcrime.org/software/sslstrip/)
+
+    * A tool to transparently hijack HTTP traffic on a network, watch for HTTPS links and redirects, then map those links into either look-alike HTTP links or homograph-similar HTTPS links.
+
+* [sslsniff](http://www.thoughtcrime.org/software/sslsniff/)
+
+    * Constructs new certificate chains for SSL/TLS connections on the fly.
+
 ## Virtual Machine Setup
 `git clone https://git.praetorianlabs.com/kludwig/mitm-vm.git`
 
@@ -35,4 +52,4 @@ This is dependent on the use case. The following two use-cases should cover most
 ##TODO
 * Look into socat | http://www.dest-unreach.org/socat/
 
-* Setup HTTP proxies (Burp, ZAP)
+* Would this be feasible? https://github.com/conorpp/btproxy

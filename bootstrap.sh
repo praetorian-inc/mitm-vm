@@ -7,38 +7,53 @@ export INTERNET_ROUTER_IP="10.10.12.1"
 #Dont change this value.
 export DEBIAN_FRONTEND=noninteractive
 
+#Update package information
 apt-get update
-apt-get upgrade
-apt-get install -y curl module-assistant debhelper git bzip2 sqlite3 mercurial libbz2-dev libsqlite3-dev python-qt4 pyro-gui python-twisted-web python-qt4-sql libqt4-sql-sqlite swig libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev
 
-git clone https://github.com/yyuu/pyenv.git /home/root/.pyenv
-export PYENV_ROOT="/home/root/.pyenv"
-echo 'export PYENV_ROOT="/home/root/.pyenv"' >> /home/root/.bashrc
+#Install some miscelanous packages
+apt-get install -y curl git golang netsed nmap
+
+#Pyenv dependencies
+apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev
+
+#Install and setup pyenv and pyenv-virtualenv
+git clone https://github.com/yyuu/pyenv.git /home/vagrant/.pyenv
+export PYENV_ROOT="/home/vagrant/.pyenv"
+echo 'export PYENV_ROOT="/home/vagrant/.pyenv"' >> /home/vagrant/.bashrc
 export PATH="$PYENV_ROOT/bin:$PATH"
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/root/.bashrc
-eval "$(/home/root/.pyenv/bin/pyenv init -)"
-echo 'eval "$(/home/root/.pyenv/bin/pyenv init -)"' >> /home/root/.bashrc
-git clone https://github.com/yyuu/pyenv-virtualenv.git /home/root/.pyenv/plugins/pyenv-virtualenv
-eval "$(/home/root/.pyenv/bin/pyenv virtualenv-init -)"
-echo 'eval "$(/home/root/.pyenv/bin/pyenv virtualenv-init -)"' >> /home/root/.bashrc
-/home/root/.pyenv/bin/pyenv install 2.7.3
-/home/root/.pyenv/bin/pyenv virtualenv --system-site-packages 2.7.3 mallory
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/vagrant/.bashrc
+eval "$(/home/vagrant/.pyenv/bin/pyenv init -)"
+echo 'eval "$(/home/vagrant/.pyenv/bin/pyenv init -)"' >> /home/vagrant/.bashrc
+git clone https://github.com/yyuu/pyenv-virtualenv.git /home/vagrant/.pyenv/plugins/pyenv-virtualenv
+eval "$(/home/vagrant/.pyenv/bin/pyenv virtualenv-init -)"
+echo 'eval "$(/home/vagrant/.pyenv/bin/pyenv virtualenv-init -)"' >> /home/vagrant/.bashrc
+/home/vagrant/.pyenv/bin/pyenv install 2.7.9
 
-#Mallory installation
-curl -s http://launchpadlibrarian.net/19436940/netfilter-extensions-source_20080719%2Bdebian-1_all.deb > nfs.deb
-apt-get install -y python-imaging
-dpkg -i nfs.deb
-dpkg -i /vagrant/deps/libnetfilter-conntrack1_0.0.99-1_amd64.deb
-dpkg -i /vagrant/deps/libnetfilter-conntrack3_1.0.1-1_amd64.deb
-ln -s /usr/lib/x86_64-linux-gnu/libnetfilter_conntrack.so.3.3.0 /usr/lib/libnetfilter_conntrack.so
-/home/root/.pyenv/versions/mallory/bin/pip install pyasn1 netfilter paramiko IPy M2Crypto==0.22.3 Pillow Twisted
-/home/root/.pyenv/versions/mallory/bin/pip install -e /vagrant/deps/pynetfilter_conntrack
-iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 20755
-#iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 20755
-#cd /vagrant/deps/mallory/src
-#/home/root/.pyenv/versions/mallory/bin/python mallory.py
+#Mitmproxy installation
+apt-get install -y libffi-dev libssl-dev libxml2-dev libxslt1-dev libtiff4-dev libjpeg8-dev zlib1g-dev \
+        libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk
+/home/vagrant/.pyenv/bin/pyenv virtualenv 2.7.9 mitmproxy
+/home/vagrant/.pyenv/versions/mitmproxy/bin/pip install mitmproxy
+#TODO: Symlink a binary/script in the path to run mitmproxy without switching venvs
 
-#Setup routes
+#SSLStrip installation
+/home/vagrant/.pyenv/bin/pyenv virtualenv 2.7.9 sslstrip
+/home/vagrant/.pyenv/versions/sslstrip/bin/pip install pyOpenSSL twisted service_identity
+git clone https://github.com/moxie0/sslstrip.git 
+cd sslstrip
+/home/vagrant/.pyenv/versions/sslstrip/bin/python setup.py install
+cd ..
+#TODO: Create binary in path to avoid venv switching
+
+#SSLSniff installation
+apt-get install -y sslsniff
+
+#Routes all traffic coming into the instance through ports 6666 (for tcp traffic) and 6667 (for udp traffic)
+iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
+iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 6667
+
+#Setup routes. This allows the VM to route all traffic (including traffic not intended for the vm) through the proper interface
 ip route del 0/0
 route add default gw $INTERNET_ROUTER_IP dev eth1
 sysctl -w net.ipv4.ip_forward=1
