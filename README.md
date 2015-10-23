@@ -1,9 +1,9 @@
 # MITM-VM (Name Pending)
 
-# Description
+## Description
 This is an easy-to-deploy virtual machine that can provide flexible man-in-the-middle capabilities. This project will require little configuration, require little additional hardware, and provide many utilites and tools to accomplish common (and not so common) man-in-the-middle scenarios.
 
-#Includes the following tools
+## Includes the following tools
 * [mitmproxy](https://mitmproxy.org/index.html)
 
     * An interactive console program that allows HTTP traffic flows to be intercepted, inspected, modified and replayed.
@@ -20,7 +20,13 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
     * Constructs new certificate chains for SSL/TLS connections on the fly.
 
-## Virtual Machine Setup
+* [socat](http://www.dest-unreach.org/socat/)
+
+    * A relay for bidirectional data transfer between two independent data channels. Each of these data channels may be a file, pipe, device (serial line etc. or a pseudo terminal), a socket (UNIX, IP4, IP6 - raw, UDP, TCP), an SSL socket, proxy CONNECT connection, a file descriptor (stdin etc.), the GNU line editor (readline), a program, or a combination of two of these.
+
+## Setup
+
+### Virtual Machine Setup
 `git clone https://git.praetorianlabs.com/kludwig/mitm-vm.git`
 
 `cd mitm-vm`
@@ -30,9 +36,9 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 When prompted, select the interface that will be the gateway interface
 
 
-## Host Setup
+### Host Setup
 This is dependent on the use case. The following two use-cases should cover most situations.
-### Use Case 1: The device you want to man-in-the-middle connects to the Internet over Wi-Fi.
+#### Use Case 1: The device you want to man-in-the-middle connects to the Internet over Wi-Fi.
 0. Update the INTERNET_ROUTER_IP environment variable in bootstrap.sh to match the IP address of your host gateway.
 
 1. Spin-up the mitm-vm using `vagrant up`. During initializiation you will be prompted to select an interface for bridging in the vm. Select the interface that will go from the virtual machine to the Internet. In this use-case, it will be your Ethernet interface.
@@ -49,7 +55,7 @@ This is dependent on the use case. The following two use-cases should cover most
 
 6. Run `vagrant ssh` to get on the mitm-vm and do all your sniffing/modifying/etc.
 
-##TODO
-* Look into socat | http://www.dest-unreach.org/socat/
-
+## Planned / TODO
 * Would this be feasible? https://github.com/conorpp/btproxy
+
+* Mallory sucks. I am going to deveop my own mallory-like system.

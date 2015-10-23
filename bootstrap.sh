@@ -49,6 +49,9 @@ cd ..
 #SSLSniff installation
 apt-get install -y sslsniff
 
+#SoCat installation
+apt-get install -y socat
+
 #Routes all traffic coming into the instance through ports 6666 (for tcp traffic) and 6667 (for udp traffic)
 iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
 iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 6667
