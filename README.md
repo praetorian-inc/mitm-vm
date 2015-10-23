@@ -37,7 +37,7 @@ When prompted, select the interface that will be the gateway interface
 
 
 ### Host Setup
-This is dependent on the use case. The following two use-cases should cover most situations.
+This is dependent on the use case. The following use-cases should cover most situations.
 #### Use Case 1: The device you want to man-in-the-middle connects to the Internet over Wi-Fi.
 0. Update the INTERNET_ROUTER_IP environment variable in bootstrap.sh to match the IP address of your host gateway.
 
@@ -55,7 +55,19 @@ This is dependent on the use case. The following two use-cases should cover most
 
 6. Run `vagrant ssh` to get on the mitm-vm and do all your sniffing/modifying/etc.
 
+### Use Case 3: You want to proxy bluetooth
+
+1. Install the [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads). You need the most recent version of VirtualBox to do this (don't trust the "Check For Updates" mechanism in VirtualBox).
+
 ## Planned / TODO
 * Would this be feasible? https://github.com/conorpp/btproxy
 
 * Mallory sucks. I am going to deveop my own mallory-like system.
+
+* Need to setup the vm to handle DNS requests.
+
+* Scapy support would be nice.
+
+* Setup a proper GOPATH.
+
+* Man-in-the-Middle framework? https://github.com/byt3bl33d3r/MITMf
