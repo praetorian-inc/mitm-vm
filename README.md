@@ -28,6 +28,10 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
     * Man-in-the-Middle analysis for bluetooth.
 
+* [killerbee](https://github.com/riverloopsec/killerbee)
+
+    * IEEE 802.15.4/ZigBee Security Research Toolkit
+
 ## Setup
 
 ### Virtual Machine Setup
@@ -67,9 +71,9 @@ This is dependent on the use case. The following use-cases should cover most sit
 
 3. From the same dialog add a USB filter for the OS X bluetooth device.
 
-## Planned / TODO
-* Would this be feasible? https://github.com/conorpp/btproxy
+4. *TODO:* Document bluetooth setup.
 
+## Planned / TODO
 * Mallory sucks. I am going to deveop my own mallory-like system.
 
 * Need to setup the vm to handle DNS requests.

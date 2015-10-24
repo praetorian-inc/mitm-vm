@@ -45,6 +45,20 @@ git clone https://github.com/conorpp/btproxy.git
 cd btproxy
 python setup.py install
 
+#Killerbee installation
+apt-get install python-gtk2 python-cairo python-usb python-crypto python-serial python-dev libgcrypt-dev mecurial libyaml-dev
+hg clone https://bitbucket.org/secdev/scapy-com
+cd scapy-com
+python setup.py install
+cd ..
+git clone https://github.com/riverloopsec/killerbee.git
+cd killerbee
+python setup.py install
+chmod +x ./tools/*
+echo 'export="$PATH:$HOME/killerbee/tools"' >> ~.bashrc
+cd ~
+
+
 #Routes all traffic coming into the instance through ports 6666 (for tcp traffic) and 6667 (for udp traffic)
 iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
 iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 6667
