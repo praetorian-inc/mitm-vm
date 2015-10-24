@@ -24,6 +24,10 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
     * A relay for bidirectional data transfer between two independent data channels. Each of these data channels may be a file, pipe, device (serial line etc. or a pseudo terminal), a socket (UNIX, IP4, IP6 - raw, UDP, TCP), an SSL socket, proxy CONNECT connection, a file descriptor (stdin etc.), the GNU line editor (readline), a program, or a combination of two of these.
 
+* [btproxy](https://github.com/conorpp/btproxy)
+
+    * Man-in-the-Middle analysis for bluetooth.
+
 ## Setup
 
 ### Virtual Machine Setup

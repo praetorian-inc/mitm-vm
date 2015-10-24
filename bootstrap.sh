@@ -18,18 +18,20 @@ apt-get install -y curl git golang netsed nmap build-essential make build-essent
 apt-get install -y libffi-dev libssl-dev libxml2-dev libxslt1-dev  zlib1g-dev \
         libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk
 pip install --upgrade cffi
+pip install --upgrade pyasn1
 pip install mitmproxy
-#TODO: Symlink a binary/script in the path to run mitmproxy without switching venvs
 
 #SSLStrip installation
-cd /home/vagrant/
-apt-get install -y python-twisted
-pip install service_identity
-git clone https://github.com/moxie0/sslstrip.git 
-cd sslstrip
-python setup.py install
-cd ..
-#TODO: Create binary in path to avoid venv switching
+apt-get install -y sslstrip
+
+#TODO: DERRRRRRR This is available via apt-get. Remove this if it builds alright.
+#cd /home/vagrant/
+#apt-get install -y python-twisted
+#pip install service_identity
+#git clone https://github.com/moxie0/sslstrip.git 
+#cd sslstrip
+#python setup.py install
+#cd ..
 
 #SSLSniff installation
 apt-get install -y sslsniff
@@ -39,6 +41,9 @@ apt-get install -y socat
 
 #BTProxy installation
 apt-get install -y bluez bluez-cups bluez-dbg bluez-hcidump bluez-tools python-bluez libbluetooth-dev libbluetooth3 python-gobject python-dbus
+git clone https://github.com/conorpp/btproxy.git
+cd btproxy
+python setup.py install
 
 #Routes all traffic coming into the instance through ports 6666 (for tcp traffic) and 6667 (for udp traffic)
 iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
