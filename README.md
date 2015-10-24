@@ -59,6 +59,10 @@ This is dependent on the use case. The following use-cases should cover most sit
 
 1. Install the [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads). You need the most recent version of VirtualBox to do this (don't trust the "Check For Updates" mechanism in VirtualBox).
 
+2. Enable USB 2.0 support for the VM. VirtualBox -> Mitmvm -> Settings -> Ports -> USB -> Enable USB Controller + USB 2.0
+
+3. From the same dialog add a USB filter for the OS X bluetooth device.
+
 ## Planned / TODO
 * Would this be feasible? https://github.com/conorpp/btproxy
 
