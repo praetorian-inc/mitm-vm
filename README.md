@@ -59,19 +59,25 @@ This is dependent on the use case. The following use-cases should cover most sit
 
 4. [Turn your Macbook into a Wireless Acces Point](http://support.apple.com/kb/PH13855?locale=en_US)
 
-5. Confirm that the device you want to mitm can access the internet.
+5. Confirm that the device you want to mitm can access the internet. I typically test this by pinging 8.8.8.8 on my host. If I actually get a response, I will check that it is filtering through the vm. To confirm this, run tcpdump on the vm (make sure you specify the correct interface!).
 
 6. Run `vagrant ssh` to get on the mitm-vm and do all your sniffing/modifying/etc.
 
-### Use Case 3: You want to proxy bluetooth
+### Use Case 3: You want to sniff / proxy bluetooth
 
 1. Install the [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads). You need the most recent version of VirtualBox to do this (don't trust the "Check For Updates" mechanism in VirtualBox).
 
-2. Enable USB 2.0 support for the VM. VirtualBox -> Mitmvm -> Settings -> Ports -> USB -> Enable USB Controller + USB 2.0
+2. Add a USB filter for the OS X bluetooth device.  VirtualBox -> Mitmvm -> Settings -> Ports -> USB -> Little USB with a "+".
 
-3. From the same dialog add a USB filter for the OS X bluetooth device.
+3. Before booting the vm, you will need to convince OS X to relinquish control of the bluetooth hardware. I have provided scripts to automate disabled and re-enabled host control of the bluetooth hardware (bt-down.sh and bt-up.sh). Run bt-down as sudo. This will create a file of the modules that were disabled. Re-enabling the modules needs this file so please don't delete it.
 
-4. *TODO:* Document bluetooth setup.
+4. Boot the vagrant vm. Test that you have access to the bluetooth module by running `hcitool dev`. You should see a device! This same utility can be used to sniff and attach to devices. For bluetooth mitm please refer to [btproxy's documentation](https://github.com/conorpp/btproxy).
+
+### Use Case 4: You want to sniff / modify Zigbee traffic
+
+1. Follow the steps for the bluetooth use case.
+
+
 
 ## Planned / TODO
 * Mallory sucks. I am going to deveop my own mallory-like system.

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Configuration variable. You will have to modify these.
-export INTERNET_ROUTER_IP="10.10.12.1"
+export INTERNET_ROUTER_IP="192.168.1.1"
 
 #This is needed to supress annoying (but harmeless) error messages from apt-get
 #Dont change this value.
@@ -12,7 +12,18 @@ apt-get update
 
 #Install some miscelanous packages
 apt-get install -y curl git golang netsed nmap build-essential make build-essential libssl-dev zlib1g-dev libbz2-dev \
-    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev python-pip python python-dev python-setuptools
+    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev python-pip python python-dev python-setuptools tcpdump
+echo 'export GOPATH="/home/vagrant/go"' >> /home/vagrant/.bashrc
+echo 'export GOPATH="/home/root/go"' >> /home/root/.bashrc
+mkdir -p /home/vagrant/go
+mkdir -p /home/vagrant/go/src
+mkdir -p /home/vagrant/go/pkg
+mkdir -p /home/vagrant/go/bin
+mkdir -p /home/root/go
+mkdir -p /home/root/go/src
+mkdir -p /home/root/go/pkg
+mkdir -p /home/root/go/bin
+
 
 #Mitmproxy installation
 apt-get install -y libffi-dev libssl-dev libxml2-dev libxslt1-dev  zlib1g-dev \
@@ -23,15 +34,6 @@ pip install mitmproxy
 
 #SSLStrip installation
 apt-get install -y sslstrip
-
-#TODO: DERRRRRRR This is available via apt-get. Remove this if it builds alright.
-#cd /home/vagrant/
-#apt-get install -y python-twisted
-#pip install service_identity
-#git clone https://github.com/moxie0/sslstrip.git 
-#cd sslstrip
-#python setup.py install
-#cd ..
 
 #SSLSniff installation
 apt-get install -y sslsniff
@@ -46,7 +48,9 @@ cd btproxy
 python setup.py install
 
 #Killerbee installation
-apt-get install python-gtk2 python-cairo python-usb python-crypto python-serial python-dev libgcrypt-dev mecurial libyaml-dev
+pip uninstall pyyaml
+apt-get install -y python-gtk2 python-cairo python-usb python-crypto python-serial python-dev libgcrypt-dev mercurial libyaml-dev libgcrypt11-dev libpython2.7-dev usbutils
+pip install pyyaml
 hg clone https://bitbucket.org/secdev/scapy-com
 cd scapy-com
 python setup.py install
@@ -55,7 +59,7 @@ git clone https://github.com/riverloopsec/killerbee.git
 cd killerbee
 python setup.py install
 chmod +x ./tools/*
-echo 'export="$PATH:$HOME/killerbee/tools"' >> ~.bashrc
+echo 'export="$PATH:$HOME/killerbee/tools"' >> ~/.bashrc
 cd ~
 
 
