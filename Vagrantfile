@@ -9,6 +9,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "public_network"
   #Provision all utilities
   config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.provision :shell, path: "route.sh", run: "always"
   #Enable virtual USB controller
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--usb", "on", "--usbehci", "on"]

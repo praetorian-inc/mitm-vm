@@ -12,13 +12,8 @@ apt-get update
 
 #Install some miscelanous packages
 apt-get install -y curl git golang netsed nmap build-essential make build-essential libssl-dev zlib1g-dev libbz2-dev \
-    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev python-pip python python-dev python-setuptools tcpdump
-echo 'export GOPATH="/home/vagrant/go"' >> /home/vagrant/.bashrc
+    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev python-pip python python-dev python-setuptools tcpdump iptables iptables-dev vim
 echo 'export GOPATH="/home/root/go"' >> /home/root/.bashrc
-mkdir -p /home/vagrant/go
-mkdir -p /home/vagrant/go/src
-mkdir -p /home/vagrant/go/pkg
-mkdir -p /home/vagrant/go/bin
 mkdir -p /home/root/go
 mkdir -p /home/root/go/src
 mkdir -p /home/root/go/pkg
@@ -61,13 +56,3 @@ python setup.py install
 chmod +x ./tools/*
 echo 'export="$PATH:$HOME/killerbee/tools"' >> ~/.bashrc
 cd ~
-
-
-#Routes all traffic coming into the instance through ports 6666 (for tcp traffic) and 6667 (for udp traffic)
-iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
-iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 6667
-
-#Setup routes. This allows the VM to route all traffic (including traffic not intended for the vm) through the proper interface
-ip route del 0/0
-route add default gw $INTERNET_ROUTER_IP dev eth1
-sysctl -w net.ipv4.ip_forward=1

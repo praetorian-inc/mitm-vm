@@ -82,7 +82,7 @@ This is dependent on the use case. The following use-cases should cover most sit
 ## Planned / TODO
 * Mallory sucks. I am going to deveop my own mallory-like system.
 
-* Need to setup the vm to handle DNS requests.
+* The VM is sending off UDP packets but never returning them to the host.
 
 * Scapy support would be nice.
 
