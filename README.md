@@ -24,6 +24,14 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
     * A relay for bidirectional data transfer between two independent data channels. Each of these data channels may be a file, pipe, device (serial line etc. or a pseudo terminal), a socket (UNIX, IP4, IP6 - raw, UDP, TCP), an SSL socket, proxy CONNECT connection, a file descriptor (stdin etc.), the GNU line editor (readline), a program, or a combination of two of these.
 
+* [btproxy](https://github.com/conorpp/btproxy)
+
+    * Man-in-the-Middle analysis for bluetooth.
+
+* [killerbee](https://github.com/riverloopsec/killerbee)
+
+    * IEEE 802.15.4/ZigBee Security Research Toolkit
+
 ## Setup
 
 ### Virtual Machine Setup
@@ -37,7 +45,7 @@ When prompted, select the interface that will be the gateway interface
 
 
 ### Host Setup
-This is dependent on the use case. The following two use-cases should cover most situations.
+This is dependent on the use case. The following use-cases should cover most situations.
 #### Use Case 1: The device you want to man-in-the-middle connects to the Internet over Wi-Fi.
 0. Update the INTERNET_ROUTER_IP environment variable in bootstrap.sh to match the IP address of your host gateway.
 
@@ -51,11 +59,33 @@ This is dependent on the use case. The following two use-cases should cover most
 
 4. [Turn your Macbook into a Wireless Acces Point](http://support.apple.com/kb/PH13855?locale=en_US)
 
-5. Confirm that the device you want to mitm can access the internet.
+5. Confirm that the device you want to mitm can access the internet. I typically test this by pinging 8.8.8.8 on my host. If I actually get a response, I will check that it is filtering through the vm. To confirm this, run tcpdump on the vm (make sure you specify the correct interface!).
 
 6. Run `vagrant ssh` to get on the mitm-vm and do all your sniffing/modifying/etc.
 
-## Planned / TODO
-* Would this be feasible? https://github.com/conorpp/btproxy
+### Use Case 3: You want to sniff / proxy bluetooth
 
+1. Install the [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads). You need the most recent version of VirtualBox to do this (don't trust the "Check For Updates" mechanism in VirtualBox).
+
+2. Add a USB filter for the OS X bluetooth device.  VirtualBox -> Mitmvm -> Settings -> Ports -> USB -> Little USB with a "+".
+
+3. Before booting the vm, you will need to convince OS X to relinquish control of the bluetooth hardware. I have provided scripts to automate disabled and re-enabled host control of the bluetooth hardware (bt-down.sh and bt-up.sh). Run bt-down as sudo. This will create a file of the modules that were disabled. Re-enabling the modules needs this file so please don't delete it.
+
+4. Boot the vagrant vm. Test that you have access to the bluetooth module by running `hcitool dev`. You should see a device! This same utility can be used to sniff and attach to devices. For bluetooth mitm please refer to [btproxy's documentation](https://github.com/conorpp/btproxy).
+
+### Use Case 4: You want to sniff / modify Zigbee traffic
+
+1. Follow the steps for the bluetooth use case.
+
+
+
+## Planned / TODO
 * Mallory sucks. I am going to deveop my own mallory-like system.
+
+* The VM is sending off UDP packets but never returning them to the host.
+
+* Scapy support would be nice.
+
+* Setup a proper GOPATH.
+
+* Man-in-the-Middle framework? https://github.com/byt3bl33d3r/MITMf

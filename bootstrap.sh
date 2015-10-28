@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Configuration variable. You will have to modify these.
-export INTERNET_ROUTER_IP="10.10.12.1"
+export INTERNET_ROUTER_IP="192.168.1.1"
 
 #This is needed to supress annoying (but harmeless) error messages from apt-get
 #Dont change this value.
@@ -11,40 +11,24 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 
 #Install some miscelanous packages
-apt-get install -y curl git golang netsed nmap
+apt-get install -y curl git golang netsed nmap build-essential make build-essential libssl-dev zlib1g-dev libbz2-dev \
+    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev python-pip python python-dev python-setuptools tcpdump iptables iptables-dev vim
+echo 'export GOPATH="/home/root/go"' >> /home/root/.bashrc
+mkdir -p /home/root/go
+mkdir -p /home/root/go/src
+mkdir -p /home/root/go/pkg
+mkdir -p /home/root/go/bin
 
-#Pyenv dependencies
-apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev
-
-#Install and setup pyenv and pyenv-virtualenv
-git clone https://github.com/yyuu/pyenv.git /home/vagrant/.pyenv
-export PYENV_ROOT="/home/vagrant/.pyenv"
-echo 'export PYENV_ROOT="/home/vagrant/.pyenv"' >> /home/vagrant/.bashrc
-export PATH="$PYENV_ROOT/bin:$PATH"
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/vagrant/.bashrc
-eval "$(/home/vagrant/.pyenv/bin/pyenv init -)"
-echo 'eval "$(/home/vagrant/.pyenv/bin/pyenv init -)"' >> /home/vagrant/.bashrc
-git clone https://github.com/yyuu/pyenv-virtualenv.git /home/vagrant/.pyenv/plugins/pyenv-virtualenv
-eval "$(/home/vagrant/.pyenv/bin/pyenv virtualenv-init -)"
-echo 'eval "$(/home/vagrant/.pyenv/bin/pyenv virtualenv-init -)"' >> /home/vagrant/.bashrc
-/home/vagrant/.pyenv/bin/pyenv install 2.7.9
 
 #Mitmproxy installation
-apt-get install -y libffi-dev libssl-dev libxml2-dev libxslt1-dev libtiff4-dev libjpeg8-dev zlib1g-dev \
+apt-get install -y libffi-dev libssl-dev libxml2-dev libxslt1-dev  zlib1g-dev \
         libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk
-/home/vagrant/.pyenv/bin/pyenv virtualenv 2.7.9 mitmproxy
-/home/vagrant/.pyenv/versions/mitmproxy/bin/pip install mitmproxy
-#TODO: Symlink a binary/script in the path to run mitmproxy without switching venvs
+pip install --upgrade cffi
+pip install --upgrade pyasn1
+pip install mitmproxy
 
 #SSLStrip installation
-/home/vagrant/.pyenv/bin/pyenv virtualenv 2.7.9 sslstrip
-/home/vagrant/.pyenv/versions/sslstrip/bin/pip install pyOpenSSL twisted service_identity
-git clone https://github.com/moxie0/sslstrip.git 
-cd sslstrip
-/home/vagrant/.pyenv/versions/sslstrip/bin/python setup.py install
-cd ..
-#TODO: Create binary in path to avoid venv switching
+apt-get install -y sslstrip
 
 #SSLSniff installation
 apt-get install -y sslsniff
@@ -52,11 +36,23 @@ apt-get install -y sslsniff
 #SoCat installation
 apt-get install -y socat
 
-#Routes all traffic coming into the instance through ports 6666 (for tcp traffic) and 6667 (for udp traffic)
-iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
-iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 6667
+#BTProxy installation
+apt-get install -y bluez bluez-cups bluez-dbg bluez-hcidump bluez-tools python-bluez libbluetooth-dev libbluetooth3 python-gobject python-dbus
+git clone https://github.com/conorpp/btproxy.git
+cd btproxy
+python setup.py install
 
-#Setup routes. This allows the VM to route all traffic (including traffic not intended for the vm) through the proper interface
-ip route del 0/0
-route add default gw $INTERNET_ROUTER_IP dev eth1
-sysctl -w net.ipv4.ip_forward=1
+#Killerbee installation
+pip uninstall pyyaml
+apt-get install -y python-gtk2 python-cairo python-usb python-crypto python-serial python-dev libgcrypt-dev mercurial libyaml-dev libgcrypt11-dev libpython2.7-dev usbutils
+pip install pyyaml
+hg clone https://bitbucket.org/secdev/scapy-com
+cd scapy-com
+python setup.py install
+cd ..
+git clone https://github.com/riverloopsec/killerbee.git
+cd killerbee
+python setup.py install
+chmod +x ./tools/*
+echo 'export="$PATH:$HOME/killerbee/tools"' >> ~/.bashrc
+cd ~
