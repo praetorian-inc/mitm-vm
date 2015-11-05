@@ -19,21 +19,23 @@ When prompted, select the interface that will be the gateway interface. In other
 This is dependent on the use case. The following use-cases should cover most situations.
 #### Use Case 1: The device you want to man-in-the-middle connects to the Internet over Wi-Fi.
 
-0. Update the INTERNET_ROUTER_IP environment variable in route.sh to match the IP address of your gateway interface router.
+0. I have made a diagram for this use case. Check it out under the diagrams folder if anything seems unclear.
 
-1. Spin-up the mitm-vm using `vagrant up`. During initializiation you will be prompted to select an interface for bridging in the vm. Select the interface that will go from the virtual machine to the Internet. In this use-case, it will be your Ethernet interface.
+1. Update the INTERNET_ROUTER_IP environment variable in route.sh to match the IP address of your gateway interface router.
+
+2. Spin-up the mitm-vm using `vagrant up`. During initializiation you will be prompted to select an interface for bridging in the vm. Select the interface that will go from the virtual machine to the Internet. In this use-case, it will be your Ethernet interface.
 
 
-2. Route all traffic on your Macbook through the VM. 
+3. Route all traffic on your Macbook through the VM. 
     * This can be done via your Network System Preferences in OS X. System Preferences → Network → Ethernet → Configure IPv4 → Manually → Set Static IP to a valid static IP, set the subnet to 0.0.0.0, and set Router to the ip address of the mitm-vm.
 
-3. Confirm that you have Internet access on the host, and that traffic is routing through the VM.
+4. Confirm that you have Internet access on the host, and that traffic is routing through the VM.
 
-4. [Turn your Macbook into a Wireless Acces Point](http://support.apple.com/kb/PH13855?locale=en_US)
+5. [Turn your Macbook into a Wireless Acces Point](http://support.apple.com/kb/PH13855?locale=en_US)
 
-5. Confirm that the device you want to mitm can access the internet. I typically test this by pinging 8.8.8.8 on my host. If I actually get a response, I will check that it is filtering through the vm. To confirm this, run tcpdump on the vm (make sure you specify the correct interface!).
+6. Confirm that the device you want to mitm can access the internet. I typically test this by pinging 8.8.8.8 on my host. If I actually get a response, I will check that it is filtering through the vm. To confirm this, run tcpdump on the vm (make sure you specify the correct interface!).
 
-6. Run `vagrant ssh` to get on the mitm-vm and do all your sniffing/modifying/etc.
+7. Run `vagrant ssh` to get on the mitm-vm and do all your sniffing/modifying/etc.
 
 ### Use Case 2: The device you want to man-in-the-middle connects to the Internet over Ethernet.
 
