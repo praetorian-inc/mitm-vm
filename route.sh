@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 
-#Configuration variable. You will have to modify these.
+#Environment variable that corresponds to the Internet-facing switch/router.
 export INTERNET_ROUTER_IP="192.168.1.1"
 
 #This is needed to supress annoying (but harmeless) error messages from apt-get
-#Dont change this value.
+#Do not change this value.
 export DEBIAN_FRONTEND=noninteractive
 
-#Routes all traffic coming into the instance through ports 6666 (for tcp traffic) and 6667 (for udp traffic)
+#Route all 443 destined traffic (HTTPS) through the VM's port 6443.
+iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 443 -m tcp -j REDIRECT --to-ports 6443
+#Routes all traffic coming into the instance through VM's port 6666.
 iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
+
 #TODO: Investigate transparent UDP proxing. Sometimes DNS requests won't forward properly.
 #iptables -t nat -A PREROUTING -i eth1 -p udp -m udp -j REDIRECT --to-ports 6667
 

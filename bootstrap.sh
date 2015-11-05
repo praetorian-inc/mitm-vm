@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-#Configuration variable. You will have to modify these.
-export INTERNET_ROUTER_IP="192.168.1.1"
-
 #This is needed to supress annoying (but harmeless) error messages from apt-get
 #Dont change this value.
 export DEBIAN_FRONTEND=noninteractive
@@ -13,11 +10,11 @@ apt-get update
 #Install some miscelanous packages
 apt-get install -y curl git golang netsed nmap build-essential make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev python-pip python python-dev python-setuptools tcpdump iptables iptables-dev vim
-echo 'export GOPATH="/home/root/go"' >> /home/root/.bashrc
-mkdir -p /home/root/go
-mkdir -p /home/root/go/src
-mkdir -p /home/root/go/pkg
-mkdir -p /home/root/go/bin
+echo 'export GOPATH="/root/go"' >> /root/.bashrc
+mkdir -p /root/go
+mkdir -p /root/go/src
+mkdir -p /root/go/pkg
+mkdir -p /root/go/bin
 
 
 #Mitmproxy installation
@@ -55,4 +52,3 @@ cd killerbee
 python setup.py install
 chmod +x ./tools/*
 echo 'export="$PATH:$HOME/killerbee/tools"' >> ~/.bashrc
-cd ~
