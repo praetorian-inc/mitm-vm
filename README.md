@@ -12,7 +12,7 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
 `vagrant up`
 
-When prompted, select the interface that will be the gateway interface. In other words, the "gateway interface" is the interface that will connect the _virtual machine_ to the Internet. For example, in use case 1 you want to mitm a device that connects to a wifi network. You configure your Macbook to share its connection to the Internet (over Ethernet) to the target device over WiFi. In this scenario, the "gateway interface" is the Ethernet interface.
+When prompted, select the interface that will be the gateway interface. In other words, the "gateway interface" is the interface that will connect the _virtual machine_ to the Internet. For example, in use case 1 you want to mitm a device that connects to a wifi network. You configure your Macbook to share its connection to the Internet (over Ethernet) to the target device over WiFi. In this scenario, the "gateway interface" is the Ethernet interface. Also, you will need to install VirutalBox Extensions for your version of VirtualBox.
 
 
 ### Host Setup
