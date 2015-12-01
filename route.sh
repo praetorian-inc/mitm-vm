@@ -9,8 +9,10 @@ export DEBIAN_FRONTEND=noninteractive
 
 #Route 8888 to 8080. This is used for the Trudy intercept.
 iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 8888 -m tcp -j REDIRECT --to-ports 8080
+
 #Route all 443 destined traffic (HTTPS) through the VM's port 6443.
 iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 443 -m tcp -j REDIRECT --to-ports 6443
+
 #Routes all other traffic (i.e. traffic that does not fall under the previous two rules) coming into the instance through port 6666 on the VM.
 iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
 
@@ -21,3 +23,4 @@ iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
 ip route del 0/0
 route add default gw $INTERNET_ROUTER_IP dev eth1
 sysctl -w net.ipv4.ip_forward=1
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
