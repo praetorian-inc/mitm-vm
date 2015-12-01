@@ -23,4 +23,3 @@ iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp -j REDIRECT --to-ports 6666
 ip route del 0/0
 route add default gw $INTERNET_ROUTER_IP dev eth1
 sysctl -w net.ipv4.ip_forward=1
-echo "nameserver 8.8.8.8" > /etc/resolv.conf

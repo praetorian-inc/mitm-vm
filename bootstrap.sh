@@ -4,6 +4,9 @@
 #Dont change this value.
 export DEBIAN_FRONTEND=noninteractive
 
+#Fix DNS issues
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
 #Update package information
 apt-get update
 
@@ -52,3 +55,6 @@ cd killerbee
 python setup.py install
 chmod +x ./tools/*
 echo 'export="$PATH:$HOME/killerbee/tools"' >> ~/.bashrc
+
+#Trudy installation
+go get "github.com/kelbyludwig/trudy"
