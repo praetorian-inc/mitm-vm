@@ -7,7 +7,7 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
 ### Virtual Machine Setup
 
-#### Almost all of the documentation assumes you are using a Macbook and OS X. Setup is possible via Linux distros but has not been documented.
+*Note: Almost all of the documentation assumes you are using a Macbook and OS X. Setup is possible via Linux distros but has not been documented.*
 
 `git clone https://git.praetorianlabs.com/kludwig/mitm-vm.git`
 
@@ -36,17 +36,17 @@ This is dependent on the use case. The following use-cases should cover most sit
 
 4. Confirm that you have Internet access on the host, and that traffic is routing through the VM.
 
-5. [Turn your Macbook into a Wireless Acces Point](http://support.apple.com/kb/PH13855?locale=en_US)
+5. [Turn your Macbook into a Wireless Access Point](http://support.apple.com/kb/PH13855?locale=en_US)
 
 6. Confirm that the device you want to mitm can access the internet. I typically test this by pinging 8.8.8.8 on my host. If I actually get a response, I will check that it is filtering through the VM. To confirm this, run tcpdump on the VM (make sure you specify the correct interface!).
 
 7. Run `vagrant ssh` to get on the mitm-vm and do all your sniffing/modifying/etc.
 
-### Use Case 2: The device you want to man-in-the-middle connects to the Internet over Ethernet.
+#### Use Case 2: The device you want to man-in-the-middle connects to the Internet over Ethernet.
 
 0. This is roughly the same setup as use case 1. The primary difference is how you share your Macbook's Internet (Step 2 - 4). Instead of sharing Ethernet connectivity over WiFi, you would share WiFi over Ethernet.
 
-### Use Case 3: You want to sniff / proxy bluetooth using OS X's built-in hardware.
+#### Use Case 3: You want to sniff / proxy bluetooth using OS X's built-in hardware.
 
 1. Install the [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads). You need the most recent version of VirtualBox to do this (don't trust the "Check For Updates" mechanism in VirtualBox).
 
@@ -58,7 +58,7 @@ This is dependent on the use case. The following use-cases should cover most sit
 
 5. For bluetooth mitm please refer to [btproxy's documentation](https://github.com/conorpp/btproxy).
 
-### Use Case 4: You want to sniff / modify Zigbee traffic using a peripheral Zigbee USB device.
+#### Use Case 4: You want to sniff / modify Zigbee traffic using a peripheral Zigbee USB device.
 
 1. Follow the steps for the bluetooth use case.
 
