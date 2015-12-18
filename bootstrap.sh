@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 #This is needed to supress annoying (but harmeless) error messages from apt-get
-#Dont change this value.
 export DEBIAN_FRONTEND=noninteractive
 
 #Fix DNS issues

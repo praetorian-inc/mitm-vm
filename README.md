@@ -1,9 +1,12 @@
-# MITM-VM (Name Pending)
+# MITM-VM
 
 ## Description
 This is an easy-to-deploy virtual machine that can provide flexible man-in-the-middle capabilities. This project will require little configuration, require little additional hardware, and provide many utilites and tools to accomplish common (and not so common) man-in-the-middle scenarios.
 
 ## Setup
+
+### Note
+Almost all of the documentation assumes you are using a Macbook and OS X. Setup is possible via Linux distros but has not been documented.
 
 ### Virtual Machine Setup
 `git clone https://git.praetorianlabs.com/kludwig/mitm-vm.git`
@@ -12,7 +15,9 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
 `vagrant up`
 
-When prompted, select the interface that will be the gateway interface. In other words, the "gateway interface" is the interface that will connect the _virtual machine_ to the Internet. For example, in use case 1 you want to mitm a device that connects to a wifi network. You configure your Macbook to share its connection to the Internet (over Ethernet) to the target device over WiFi. In this scenario, the "gateway interface" is the Ethernet interface. Also, you will need to install VirutalBox Extensions for your version of VirtualBox.
+When prompted, select the interface that will be the gateway interface. In other words, the "gateway interface" is the interface that will connect the _virtual machine_ to the Internet. For example, in use case 1 you want to act as a proxy for a device that connects to a WiFi network. You will want to configure your Macbook to share its connection to the Internet (over Ethernet) to the target device over WiFi. In this scenario, the "gateway interface" is the Ethernet interface. 
+
+Also, you will need to install VirutalBox Extensions for your version of VirtualBox.
 
 
 ### Host Setup
@@ -25,7 +30,6 @@ This is dependent on the use case. The following use-cases should cover most sit
 
 2. Spin-up the mitm-vm using `vagrant up`. During initializiation you will be prompted to select an interface for bridging in the vm. Select the interface that will go from the virtual machine to the Internet. In this use-case, it will be your Ethernet interface.
 
-
 3. Route all traffic on your Macbook through the VM. 
     * This can be done via your Network System Preferences in OS X. System Preferences → Network → Ethernet → Configure IPv4 → Manually → Set Static IP to a valid static IP, set the subnet to 0.0.0.0, and set Router to the ip address of the mitm-vm.
 
@@ -33,7 +37,7 @@ This is dependent on the use case. The following use-cases should cover most sit
 
 5. [Turn your Macbook into a Wireless Acces Point](http://support.apple.com/kb/PH13855?locale=en_US)
 
-6. Confirm that the device you want to mitm can access the internet. I typically test this by pinging 8.8.8.8 on my host. If I actually get a response, I will check that it is filtering through the vm. To confirm this, run tcpdump on the vm (make sure you specify the correct interface!).
+6. Confirm that the device you want to mitm can access the internet. I typically test this by pinging 8.8.8.8 on my host. If I actually get a response, I will check that it is filtering through the VM. To confirm this, run tcpdump on the VM (make sure you specify the correct interface!).
 
 7. Run `vagrant ssh` to get on the mitm-vm and do all your sniffing/modifying/etc.
 
@@ -41,7 +45,7 @@ This is dependent on the use case. The following use-cases should cover most sit
 
 0. This is roughly the same setup as use case 1. The primary difference is how you share your Macbook's Internet (Step 2 - 4). Instead of sharing Ethernet connectivity over WiFi, you would share WiFi over Ethernet.
 
-### Use Case 3: You want to sniff / proxy bluetooth
+### Use Case 3: You want to sniff / proxy bluetooth using OS X's built-in hardware.
 
 1. Install the [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads). You need the most recent version of VirtualBox to do this (don't trust the "Check For Updates" mechanism in VirtualBox).
 
@@ -53,11 +57,15 @@ This is dependent on the use case. The following use-cases should cover most sit
 
 5. For bluetooth mitm please refer to [btproxy's documentation](https://github.com/conorpp/btproxy).
 
-### Use Case 4: You want to sniff / modify Zigbee traffic
+### Use Case 4: You want to sniff / modify Zigbee traffic using a peripheral Zigbee USB device.
 
 1. Follow the steps for the bluetooth use case.
 
 ## Includes the following tools
+* [trudy](https://github.com/kelbyludwig/trudy)
+
+    * A transparent TCP proxy that supports packet interception and programmatic modification.
+
 * [mitmproxy](https://mitmproxy.org/index.html)
 
     * An interactive console program that allows HTTP traffic flows to be intercepted, inspected, modified and replayed.
@@ -85,9 +93,3 @@ This is dependent on the use case. The following use-cases should cover most sit
 * [killerbee](https://github.com/riverloopsec/killerbee)
 
     * IEEE 802.15.4/ZigBee Security Research Toolkit
-
-
-## Planned / TODO
-* The VM is sending off UDP packets but never returning them to the host. Need to investigate why this happens.
-
-* Man-in-the-Middle framework? https://github.com/byt3bl33d3r/MITMf
