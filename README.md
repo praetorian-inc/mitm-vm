@@ -1,5 +1,9 @@
 # MITM-VM
 
+## Author
+
+Written by Kelby Ludwig (@kelbyludwig)
+
 ## Description
 This is an easy-to-deploy virtual machine that can provide flexible man-in-the-middle capabilities. This project will require little configuration, require little additional hardware, and provide many utilites and tools to accomplish common (and not so common) man-in-the-middle scenarios.
 
