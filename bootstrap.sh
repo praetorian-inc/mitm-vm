@@ -56,4 +56,4 @@ chmod +x ./tools/*
 echo 'export="$PATH:$HOME/killerbee/tools"' >> ~/.bashrc
 
 #Trudy installation
-go get "github.com/kelbyludwig/trudy"
+go get "github.com/praetorian-inc/trudy"
