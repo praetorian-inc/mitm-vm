@@ -19,11 +19,11 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
 `vagrant up`
 
-When prompted, select the interface that will be the gateway interface. In other words, the "gateway interface" is the interface that will connect the _virtual machine_ to the Internet. For example, in use case 1 you want to act as a proxy for a device that connects to a WiFi network. You will want to configure your Macbook to share its connection to the Internet (over Ethernet) to the target device over WiFi. In this scenario, the "gateway interface" is the Ethernet interface. 
+When prompted, select the interface that will be the gateway interface. In other words, the "gateway interface" is the interface that will connect the _virtual machine_ to the Internet. For example, in use case 1 (see below) you want to act as a proxy for a device that connects to a WiFi network. You will want to configure your Macbook to share its connection to the Internet (over Ethernet) to the target device over WiFi. In this scenario, the "gateway interface" is the Ethernet interface. 
 
 You will need to install VirutalBox Extensions for your version of VirtualBox.
 
-If you do not plan on using [trudy](https://github.com/kelbyludwig/trudy) (Which this box was built for!) then remove the iptables commands for trudy from route.sh
+If you do not plan on using [trudy](https://github.com/kelbyludwig/trudy) (Which this box was built for!) then remove the iptables commands for trudy from route.sh.
 
 ### Host Setup
 This is dependent on the use case. The following use-cases should cover most situations.
@@ -69,7 +69,7 @@ This is dependent on the use case. The following use-cases should cover most sit
 ## Includes the following tools
 * [trudy](https://github.com/kelbyludwig/trudy)
 
-    * A transparent TCP proxy that supports packet interception and programmatic modification.
+    * A transparent TCP proxy that supports packet interception and programmatic modification. 
 
 * [mitmproxy](https://mitmproxy.org/index.html)
 

@@ -9,7 +9,7 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 #Update package information
 apt-get update
 
-#Install some miscelanous packages
+#Install some miscellaneous packages
 apt-get install -y curl git golang netsed nmap build-essential make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev python-pip python python-dev python-setuptools tcpdump iptables iptables-dev vim
 echo 'export GOPATH="/root/go"' >> /root/.bashrc
