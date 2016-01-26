@@ -11,7 +11,7 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
 ### Virtual Machine Setup
 
-*Note: Almost all of the documentation assumes you are using a Macbook and OS X. Setup is possible via Linux distros but has not been documented.*
+*Note: Almost all of the documentation assumes you are using a Macbook and OS X. Setup is possible via Linux distros but has not been documented. Furthermore, you will need two physical connections to the Internet (e.g. one wired, one wireless) for MitM-VM to route traffic properly.*
 
 `git clone https://github.com/praetorian-inc/mitm-vm.git` 
 
