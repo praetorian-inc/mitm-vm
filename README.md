@@ -13,7 +13,7 @@ This is an easy-to-deploy virtual machine that can provide flexible man-in-the-m
 
 *Note: Almost all of the documentation assumes you are using a Macbook and OS X. Setup is possible via Linux distros but has not been documented.*
 
-`git clone https://git.praetorianlabs.com/kludwig/mitm-vm.git`
+`git clone https://github.com/praetorian-inc/mitm-vm.git` 
 
 `cd mitm-vm`
 
