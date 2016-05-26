@@ -10,14 +10,8 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 apt-get update
 
 #Install some miscellaneous packages
-apt-get install -y curl git golang netsed nmap build-essential make build-essential libssl-dev zlib1g-dev libbz2-dev \
+apt-get install -y curl git netsed nmap build-essential make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev python-pip python python-dev python-setuptools tcpdump iptables iptables-dev vim
-echo 'export GOPATH="/root/go"' >> /root/.bashrc
-mkdir -p /root/go
-mkdir -p /root/go/src
-mkdir -p /root/go/pkg
-mkdir -p /root/go/bin
-
 
 #Mitmproxy installation
 apt-get install -y libffi-dev libssl-dev libxml2-dev libxslt1-dev  zlib1g-dev \
@@ -56,5 +50,14 @@ chmod +x ./tools/*
 echo 'export="$PATH:$HOME/killerbee/tools"' >> ~/.bashrc
 
 #Trudy installation
+echo 'export GOPATH="/root/go"' >> /root/.bashrc
+echo 'export PATH=$PATH:/usr/local/go/bin' >> /root/.bashrc
+mkdir -p /root/go
+mkdir -p /root/go/src
+mkdir -p /root/go/pkg
+mkdir -p /root/go/bin
+mkdir -p /root/go-src
+wget -O /root/go-src/go.tar.gz https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz
+tar -C /usr/local -xzf /root/go-src/go.tar.gz
 export GOPATH="/root/go"
-go get "github.com/praetorian-inc/trudy"
+/usr/local/go/bin/go get "github.com/praetorian-inc/trudy"
