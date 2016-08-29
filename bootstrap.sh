@@ -3,6 +3,9 @@
 #This is needed to supress annoying (but harmeless) error messages from apt-get
 export DEBIAN_FRONTEND=noninteractive
 
+#Fix DNS issues
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
 #Update package information
 apt-get update
 
